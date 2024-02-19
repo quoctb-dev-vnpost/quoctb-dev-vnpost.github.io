@@ -7,6 +7,7 @@ async function sendMessageToTelegram() {
     const email = document.getElementById('emailcustomer').value;
     const sanpham = document.getElementById('products').value;
     const ghichu = document.getElementById('ordernote').value;
+    const thoigianbaohanh = parseInt(document.getElementById('time-guarantee').value);
     // Tạo một đối tượng Date mới, đại diện cho thời điểm hiện tại
     const currentDate = new Date();
 
@@ -19,7 +20,7 @@ async function sendMessageToTelegram() {
     const currentHour = currentDate.getHours();
     const currentMinute = currentDate.getMinutes();
     const currentSecond = currentDate.getSeconds();
-    const messageText = `NEW ORDER | ${currentDay}/${currentMonth}/${currentYear} | ${currentHour}:${currentMinute}:${currentSecond}\nMã đơn hàng: ${madonhang}\nSĐT: ${sdt}\nEmail: ${email}\nSản phẩm: ${sanpham}\nGhi chú: ${ghichu}`; // Nội dung tin nhắn bạn muốn gửi
+    const messageText = `NEW ORDER | ${currentDay}/${currentMonth}/${currentYear} | ${currentHour}:${currentMinute}:${currentSecond}\nMã đơn hàng: ${madonhang}\nSĐT: ${sdt}\nEmail: ${email}\nSản phẩm: ${sanpham}\nGhi chú: ${ghichu}\nThời gian bảo hành: ${thoigianbaohanh}`; // Nội dung tin nhắn bạn muốn gửi
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {

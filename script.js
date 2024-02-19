@@ -1,3 +1,48 @@
+async function sendMessageToTelegram() {
+    const BOT_TOKEN = '6812388740:AAGViia9pEFVdAATHI-rqpRZV6wfWyVFrOw'; // Thay thế 'YOUR_BOT_TOKEN' bằng mã token của bot Telegram của bạn
+    const CHAT_ID = '-4131498545'; // Thay thế 'YOUR_CHAT_ID' bằng chat_id của người dùng hoặc nhóm bạn muốn gửi tin nhắn
+    const madonhang = document.getElementById('ordercode').value;
+    const sdt = document.getElementById('phonenumber').value;
+    const email = document.getElementById('emailcustomer').value;
+    const sanpham = document.getElementById('products').value;
+    const ghichu = document.getElementById('ordernote').value;
+    const messageText = `Mã đơn hàng: ${madonhang}\nSĐT: ${sdt}\nEmail: ${email}\nSản phẩm: ${sanpham}\nGhi chú: ${ghichu}`; // Nội dung tin nhắn bạn muốn gửi
+
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: messageText
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send message');
+        }
+
+        const responseData = await response.json();
+        console.log('Message sent successfully:', responseData);
+        alert('Thông tin đơn hàng đã được lưu!');
+    } catch (error) {
+        console.error('Error sending message:', error.message);
+        alert('Failed to send message. Please try again later.');
+    }
+}
+
+// Lấy tham chiếu đến nút gửi tin nhắn bằng ID
+const sendButton = document.getElementById('sendButton');
+
+// Gán sự kiện 'click' cho nút và truyền vào hàm gửi tin nhắn khi nút được nhấn
+sendButton.addEventListener('click', sendMessageToTelegram);
+
+
+
+
+
 function camviewer() {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
@@ -36,47 +81,6 @@ function camviewer() {
         }, 1000);
     });
 };
-
-
-
-async function sendMessageToTelegram() {
-    const BOT_TOKEN = '6812388740:AAGViia9pEFVdAATHI-rqpRZV6wfWyVFrOw'; // Thay thế 'YOUR_BOT_TOKEN' bằng mã token của bot Telegram của bạn
-    const CHAT_ID = '-4131498545'; // Thay thế 'YOUR_CHAT_ID' bằng chat_id của người dùng hoặc nhóm bạn muốn gửi tin nhắn
-
-    const messageText = 'Có đơn hàng mới!'; // Nội dung tin nhắn bạn muốn gửi
-
-    try {
-        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: messageText
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to send message');
-        }
-
-        const responseData = await response.json();
-        console.log('Message sent successfully:', responseData);
-        alert('Thông tin đơn hàng đã được lưu!');
-    } catch (error) {
-        console.error('Error sending message:', error.message);
-        alert('Failed to send message. Please try again later.');
-    }
-}
-
-// Lấy tham chiếu đến nút gửi tin nhắn bằng ID
-const sendButton = document.getElementById('sendButton');
-
-// Gán sự kiện 'click' cho nút và truyền vào hàm gửi tin nhắn khi nút được nhấn
-sendButton.addEventListener('click', sendMessageToTelegram);
-
-
 
 // Biến boolean để theo dõi trạng thái của camera
 let isCameraOn = false;

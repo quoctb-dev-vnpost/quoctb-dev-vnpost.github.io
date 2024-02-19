@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+function camviewer() {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }, 1000);
     });
-});
+};
 
 
 
@@ -75,3 +75,51 @@ const sendButton = document.getElementById('sendButton');
 
 // Gán sự kiện 'click' cho nút và truyền vào hàm gửi tin nhắn khi nút được nhấn
 sendButton.addEventListener('click', sendMessageToTelegram);
+
+
+
+// Biến boolean để theo dõi trạng thái của camera
+let isCameraOn = false;
+
+// Lấy tham chiếu đến nút bật/tắt camera bằng ID
+const toggleCameraButton = document.getElementById('toggleCameraButton');
+
+// Gán sự kiện 'click' cho nút và thực hiện hành động tương ứng
+toggleCameraButton.addEventListener('click', function() {
+    if (isCameraOn) {
+        stopCamera(); // Tắt camera nếu đang bật
+    } else {
+        startCamera(); // Bật camera nếu đang tắt
+    }
+});
+
+// Hàm bật camera
+function startCamera() {
+    document.getElementById('cam-scan').style.display = 'block';
+    camviewer()
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+            isCameraOn = true;
+            toggleCameraButton.textContent = 'Tắt Camera';
+        })
+        .catch(function(err) {
+            console.error('Error accessing the camera.', err);
+        });
+}
+
+// Hàm tắt camera
+function stopCamera() {
+    document.getElementById('cam-scan').style.display = 'none';
+    const stream = video.srcObject;
+    const tracks = stream.getTracks();
+
+    tracks.forEach(function(track) {
+        track.stop();
+    });
+
+    video.srcObject = null;
+    isCameraOn = false;
+    toggleCameraButton.textContent = 'Bật Camera';
+}

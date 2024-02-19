@@ -1,12 +1,25 @@
 async function sendMessageToTelegram() {
     const BOT_TOKEN = '6812388740:AAGViia9pEFVdAATHI-rqpRZV6wfWyVFrOw'; // Thay thế 'YOUR_BOT_TOKEN' bằng mã token của bot Telegram của bạn
     const CHAT_ID = '-4131498545'; // Thay thế 'YOUR_CHAT_ID' bằng chat_id của người dùng hoặc nhóm bạn muốn gửi tin nhắn
+
     const madonhang = document.getElementById('ordercode').value;
     const sdt = document.getElementById('phonenumber').value;
     const email = document.getElementById('emailcustomer').value;
     const sanpham = document.getElementById('products').value;
     const ghichu = document.getElementById('ordernote').value;
-    const messageText = `Mã đơn hàng: ${madonhang}\nSĐT: ${sdt}\nEmail: ${email}\nSản phẩm: ${sanpham}\nGhi chú: ${ghichu}`; // Nội dung tin nhắn bạn muốn gửi
+    // Tạo một đối tượng Date mới, đại diện cho thời điểm hiện tại
+    const currentDate = new Date();
+
+    // Lấy ngày, tháng và năm hiện tại
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth() + 1; // Lưu ý rằng tháng bắt đầu từ 0
+    const currentYear = currentDate.getFullYear();
+
+    // Lấy giờ, phút và giây hiện tại
+    const currentHour = currentDate.getHours();
+    const currentMinute = currentDate.getMinutes();
+    const currentSecond = currentDate.getSeconds();
+    const messageText = `NEW ORDER | ${currentDay}/${currentMonth}/${currentYear} | ${currentHour}:${currentMinute}:${currentSecond}\nMã đơn hàng: ${madonhang}\nSĐT: ${sdt}\nEmail: ${email}\nSản phẩm: ${sanpham}\nGhi chú: ${ghichu}`; // Nội dung tin nhắn bạn muốn gửi
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -49,24 +62,24 @@ function camviewer() {
     const context = canvas.getContext('2d');
 
     // Thêm sự kiện 'loadedmetadata' để đảm bảo rằng video đã sẵn sàng
-    video.addEventListener('loadedmetadata', function() {
+    video.addEventListener('loadedmetadata', function () {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
     });
 
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-        .then(function(stream) {
+        .then(function (stream) {
             video.srcObject = stream;
             video.play();
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.error('Error accessing the camera.', err);
         });
 
-    video.addEventListener('play', function() {
+    video.addEventListener('play', function () {
         const qrCanvas = document.createElement('canvas');
         const qrContext = qrCanvas.getContext('2d');
-        setInterval(function() {
+        setInterval(function () {
             qrCanvas.width = video.videoWidth;
             qrCanvas.height = video.videoHeight;
             qrContext.drawImage(video, 0, 0, qrCanvas.width, qrCanvas.height);
@@ -89,7 +102,7 @@ let isCameraOn = false;
 const toggleCameraButton = document.getElementById('toggleCameraButton');
 
 // Gán sự kiện 'click' cho nút và thực hiện hành động tương ứng
-toggleCameraButton.addEventListener('click', function() {
+toggleCameraButton.addEventListener('click', function () {
     if (isCameraOn) {
         stopCamera(); // Tắt camera nếu đang bật
     } else {
@@ -102,13 +115,13 @@ function startCamera() {
     document.getElementById('cam-scan').style.display = 'block';
     camviewer()
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-        .then(function(stream) {
+        .then(function (stream) {
             video.srcObject = stream;
             video.play();
             isCameraOn = true;
             toggleCameraButton.textContent = 'Tắt Camera';
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.error('Error accessing the camera.', err);
         });
 }
@@ -119,7 +132,7 @@ function stopCamera() {
     const stream = video.srcObject;
     const tracks = stream.getTracks();
 
-    tracks.forEach(function(track) {
+    tracks.forEach(function (track) {
         track.stop();
     });
 

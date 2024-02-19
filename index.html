@@ -9,15 +9,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <title>QR Scanner</title>
+    <title>99Tech Management Software</title>
 </head>
 
 <body>
-    <h1>99TECH SCANNER</h1>
-    <video id="video" width="auto" height="auto" class="img-thumbnail" autoplay></video>
-    <canvas id="canvas" style="display:none;"></canvas>
-    <button type="button" class="btn btn-primary btn-lg btn-block">Lấy thông tin</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block">Hủy đơn hàng</button>
+    <div class="container">
+        <div class="row" style="text-align: center;">
+            <h1>99TECH MANAGEMENT</h1>
+        </div>
+        <div class="row">
+            <video id="video" width="auto" height="auto" class="img-thumbnail" autoplay></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+        </div>
+        <br>
+        <div class="row">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Mã đơn hàng</label>
+                    <input class="form-control" type="text" placeholder="Lấy từ mã QR" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">SĐT Khách hàng</label>
+                    <input class="form-control" type="text" placeholder="0777393715">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Email khách hàng</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1"
+                        placeholder="htkh@99tech.com">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Sản phẩm bảo hành</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>8GB</option>
+                        <option>16GB</option>
+                        <option>32GB</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Ghi chú đơn hàng</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary">Lưu thông tin đơn hàng</button>
+                <button type="button" class="btn btn-danger">Hủy đơn hàng</button>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script src="jsQR.js"></script>
 </body>
